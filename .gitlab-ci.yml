@@ -1,0 +1,7 @@
+types:
+    - build
+
+build:
+    type: build
+    script:
+        - make deps app
