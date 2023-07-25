@@ -18,12 +18,19 @@
     </a>
 </p>
 
+<div align="center">
+# PCAPNG 
+![build passing](https://github.com/shortishly/pcapng/actions/workflows/main.yml/badge.svg)
+</div>
+
 ## Why?
 
 Convert Wireshark packet capture (pcap) files into something that is
 easily usable by an Erlang project.
 
 ## What?
+
+Run an interactive shell with  `make shell`:
 
 ```erlang
 1> {ok, B} = file:read_file("test/pcapng_SUITE_data/dns.pcap").
