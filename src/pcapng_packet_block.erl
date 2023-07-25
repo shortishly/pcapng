@@ -39,6 +39,6 @@ parse(Body, I) ->
       timestamp_low => TimestampLow,
       captured_len => CapturedLen,
       packet_len => PacketLen,
-      packet => pcanp_ethernet:decode(Packet),
+      packet => pcapng_ethernet:decode(Packet),
       options => pcapng_options:parse(Options, I)
      }.

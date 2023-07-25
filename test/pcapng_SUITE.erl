@@ -13,8 +13,11 @@
 %% limitations under the License.
 
 -module(pcapng_SUITE).
--include_lib("common_test/include/ct.hrl").
+
 -compile(export_all).
+-compile(nowarn_export_all).
+-include_lib("common_test/include/ct.hrl").
+
 
 all() ->
         [{group, samples},
@@ -53,6 +56,9 @@ groups() ->
 
 init_per_suite(Config) ->
     application:start(pcapng),
+    Config.
+
+end_per_suite(Config) ->
     Config.
 
 parse(Config, Name) ->

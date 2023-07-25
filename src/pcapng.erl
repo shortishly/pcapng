@@ -15,6 +15,7 @@
 -module(pcapng).
 -export([get_env/1]).
 -export([parse/1]).
+-export([process/1]).
 -export([variable_length/2]).
 -export([variable_length/3]).
 
@@ -26,6 +27,22 @@
 -define(NAME_RESOLUTION, 4).
 -define(INTERFACE_STATISTICS, 5).
 -define(ENHANCED_PACKET, 6).
+
+
+process(Filename) ->
+    {ok, PCAPNG} = file:read_file(Filename),
+    write_file(filename:rootname(Filename) ++ ".terms",
+               parse(PCAPNG)).
+
+
+write_file(Filename, Terms) ->
+    {ok, Header} = file:read_file("HEADER.txt"),
+
+    file:write_file(
+      Filename,
+      [io_lib:fwrite("%% -*- mode: erlang -*-~n", []),
+       Header,
+       [io_lib:fwrite("~n~p.~n", [Term]) || Term <- Terms]]).
 
 
 parse(<<

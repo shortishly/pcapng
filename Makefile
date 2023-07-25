@@ -14,6 +14,20 @@
 # limitations under the License.
 #
 PROJECT = pcapng
-PROJECT_VERSION = 0.0.1
 PROJECT_DESCRIPTION = PCAP Next Generation Dump File Format
-include erlang.mk
+PROJECT_VERSION = ${shell git describe --tags}
+
+COVER = 1
+COVER_REPORT_DIR = _site/cover
+EDOC_OPTS = {preprocess, true}, {dir, "_site/edoc"}
+
+SHELL_DEPS += sync
+SHELL_OPTS += +pc unicode
+SHELL_OPTS += -s sync
+
+PLT_APPS += compiler
+PLT_APPS += crypto
+PLT_APPS += stdlib
+
+
+include $(if $(ERLANG_MK_FILENAME),$(ERLANG_MK_FILENAME),erlang.mk)

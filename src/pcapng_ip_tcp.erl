@@ -32,20 +32,30 @@ decode(<<
          RST:1,
          SYN:1,
          FIN:1,
+         WindowSize:16,
+         Checksum:16,
          _/binary
-       >>) ->
+       >> = Packet) ->
+    <<_:DataOffset/unit:32, Data/bytes>> = Packet,
+
     #{source => Source,
       destination => Destination,
       sequence => Sequence,
       acknowledgement => Acknowledgement,
       data_offset => DataOffset,
-      ns => NS,
-      cwr => CWR,
-      ece => ECE,
-      urg => URG,
-      ack => ACK,
-      psh => PSH,
-      rst => RST,
-      syn => SYN,
-      fin => FIN
-     }.
+      flags => #{ns => b(NS),
+                 cwr => b(CWR),
+                 ece => b(ECE),
+                 urg => b(URG),
+                 ack => b(ACK),
+                 psh => b(PSH),
+                 rst => b(RST),
+                 syn => b(SYN),
+                 fin => b(FIN)},
+      window_size => WindowSize,
+      checksum => Checksum,
+      data => Data}.
+
+b(0) -> false;
+b(1) -> true.
+    
